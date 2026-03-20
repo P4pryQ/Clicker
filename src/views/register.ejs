@@ -1,0 +1,23 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h2>Rejestracja</h2>
+                <form action="/auth/register" method="POST">
+                    <div>
+                        <label for="username">Nowa nazwa użytkownika</label>
+                        <input type="text" name="username" id="username" required>
+                    </div>
+                    <div>
+                        <label for="password">Hasło</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                    <button type="submit">Stwórz konto</button>
+                </form>
+                <div>
+                    <p>Masz już konto? <a href="/auth/login">Zaloguj się</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

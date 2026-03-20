@@ -1,0 +1,23 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h2>Logowanie</h2>
+                <form action="/auth/login" method="POST">
+                    <div>
+                        <label for="username">Nazwa użytkownika</label>
+                        <input type="text" name="username" id="username" required>
+                    </div>
+                    <div>
+                        <label for="password">Hasło</label>
+                        <input type="password" name="password" id="password" required>
+                    </div>
+                    <button type="submit">Zaloguj się</button>
+                </form>
+                <div>
+                    <p>Nie masz konta? <a href="/auth/register">Zarejestruj się</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

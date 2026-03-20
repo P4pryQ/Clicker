@@ -1,0 +1,86 @@
+<div>
+    <div>
+        <div>
+            <h2>Kliknięcia:</h2>
+            
+            <div>
+                <h1>
+                    <span id="pointsDisplay"><%= user.points %></span>
+                </h1>
+            </div>
+
+            <button id="clickBtn">
+                KLIKNIJ MNIE!
+            </button>
+
+            <div>
+                <div>
+                    <p>Kliknięcie: <b>+<%= user.clickValue %></b></p>
+                </div>
+                <div>
+                    <span>Automatycznie: </span>
+                    <strong><span id="autoClickDisplay"><%= user.autoClickPerSecond %></span>/s</strong>
+                </div>
+            </div>
+
+            
+
+            <hr>
+
+            <div>
+                <h4>Dostępne Ulepszenia</h4>
+                <div>
+                    <div>
+                        <p>+1 punkt automatycznie co sekundę</p>
+                    </div>
+                    <button id="buyUpgradeBtn">
+                        Kup za 50 pkt
+                    </button>
+                </div>
+                <div id="upgradeMessage" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('clickBtn').addEventListener('click', async () => {
+        const response = await fetch('/game/click', { method: 'POST' });
+        const data = await response.json();
+        if(data.points !== undefined) {
+            document.getElementById('pointsDisplay').innerText = data.points;
+        }
+    });
+
+    document.getElementById('buyUpgradeBtn').addEventListener('click', async () => {
+        const msgEl = document.getElementById('upgradeMessage');
+        msgEl.style.display = 'none'; 
+
+        try {
+            const response = await fetch('/game/buy-upgrade', { method: 'POST' });
+            const data = await response.json();
+
+            if (data.success) {
+                document.getElementById('pointsDisplay').innerText = data.points;
+                document.getElementById('autoClickDisplay').innerText = data.autoClick;
+                alert("Kupiono ulepszenie!"); 
+            } else {
+                msgEl.innerText = data.message;
+                msgEl.style.display = 'block';
+            }
+        } catch (error) {
+            msgEl.innerText = "Błąd połączenia z serwerem.";
+            msgEl.style.display = 'block';
+        }
+    });
+
+    setInterval(() => {
+        let points = parseInt(document.getElementById('pointsDisplay').innerText);
+        let auto = parseInt(document.getElementById('autoClickDisplay').innerText);
+
+        if (auto > 0) {
+            let newPoints = points + auto;
+            document.getElementById('pointsDisplay').innerText = newPoints;
+        }
+    }, 1000);
+</script>
